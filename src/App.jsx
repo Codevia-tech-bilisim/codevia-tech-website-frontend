@@ -6,7 +6,8 @@ import {
   ArrowRight, PlayCircle,
 } from "lucide-react";
 import logo from "./assets/codevia-logo-big.png";
-import TeknoKentLogo3D from "./components/TeknoKentLogo3D";
+import TeknoKentExtrude3D from "./components/TeknoKentExtrude3D";
+
 
 /* ---------- Layout helpers ---------- */
 const Container = ({ children }) => (
@@ -210,14 +211,9 @@ export default function App() {
                 güçlendirir, çalışanlarınızı her yerden bağlı tutar.
               </p>
 
-
-              {/* 3D Logo buraya geldi */}
-              <div className="mt-8 flex justify-center">
-                <div style={{ width: "500px", height: "300px" }}>
-                  <TeknoKentLogo3D />
-                </div>
+              <div className="mt-10 flex justify-center">
+                <TeknoKentExtrude3D width={560} height={380} />
               </div>
-
             </div>
           </Container>
         </section>
