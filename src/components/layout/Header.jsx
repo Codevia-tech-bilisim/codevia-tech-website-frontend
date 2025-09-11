@@ -20,7 +20,7 @@ export default function Header() {
       <Container>
         <div className="mt-4 flex items-center justify-between rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-lg">
           <a href="#home" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#1f2a33] to-[#3e4a54] flex items-center justify-center">
+            <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#434e51] to-[#1b1b22] flex items-center justify-center">
               <img
                 src={logo}
                 alt="Codevia"

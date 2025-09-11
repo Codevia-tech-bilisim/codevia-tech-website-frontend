@@ -2,78 +2,104 @@ import React from "react";
 
 export default function PlanetFX({ className = "" }) {
   return (
-    <div
-      className={`pointer-events-none absolute inset-0 z-0 ${className}`}
-      aria-hidden="true"
-      role="presentation"
-    >
-      {/* subtle vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(50%_40%_at_100%_0%,rgba(62,130,197,0.18),transparent_30%)]" />
+    <div className="pointer-events-none absolute inset-0 z-0">
+    {/* ⭐️ Senin mevcut yıldız alanın – AYNI KALDI */}
+    <div 
+      className="absolute inset-0 opacity-80" 
+      style={{
+        backgroundImage: `
+          radial-gradient(circle at 25% 25%, rgba(218,213,202,1) 0.5px, transparent 1px),
+          radial-gradient(circle at 75% 75%, rgba(67,78,81,0.8) 0.5px, transparent 1px),
+          radial-gradient(circle at 45% 85%, rgba(218,213,202,0.6) 0.5px, transparent 1px),
+          radial-gradient(circle at 85% 15%, rgba(67,78,81,0.9) 0.5px, transparent 1px),
+          radial-gradient(circle at 15% 65%, rgba(218,213,202,0.4) 0.5px, transparent 1px)
+        `,
+        backgroundSize: '100px 100px, 150px 150px, 80px 80px, 200px 200px, 120px 120px'
+      }} 
+    />
 
-      {/* stars */}
+    {/* 🔵 Gezegen yayı – alt merkezden çıkan tek büyük yay */}
+    <div className="absolute left-1/2 bottom-[-33vh] -translate-x-1/2">
+      {/* Planet body (çok koyu) – yalnızca üst yay görünsün diye maske */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="rounded-full"
         style={{
-          backgroundImage: "radial-gradient(rgba(2,6,23,0.95) 0%, transparent 1px)",
-          backgroundSize: "2px 2px",
+          width: "190vh",
+          height: "190vh",
+          background:
+            "radial-gradient(circle at 50% 45%, #0f1218 0%, #141823 55%, #1b1b22 50%, #1b1b22 85%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 45%, white 70%, transparent 100%)",
+          maskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 45%, white 70%, transparent 100%)",
+          filter: "contrast(1.05)"
         }}
       />
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: "radial-gradient(rgba(2,6,23,0.95) 0%, transparent 1px)",
-          backgroundSize: "3px 3px",
-          backgroundPosition: "12px 8px",
-        }}
-      />
 
-      {/* planet body */}
+      {/* İnce parlak rim */}
       <div
-        className="absolute left-1/2 top-[48%] -translate-x-1/2 h-[150vh] w-[150vh] rounded-full"
+        className="absolute inset-0 rounded-full"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(2,6,23,0.95) 0%, rgba(2,6,23,0.8) 55%, transparent 70%)",
-          maskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-          WebkitMaskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-        }}
-      />
-
-      {/* atmosphere glow */}
-      <div
-        className="absolute left-1/2 top-[46%] -translate-x-1/2 h-[160vh] w-[160vh] rounded-full opacity-90"
-        style={{
-          background:
-            "radial-gradient(circle at center, transparent 50%, rgba(62,74,84,0.6) 58%, transparent 72%)",
-          filter: "blur(60px)",
-          maskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-          WebkitMaskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-        }}
-      />
-
-      {/* bright rim - buz mavisi */}
-      <div
-        className="absolute left-1/2 top-[48%] -translate-x-1/2 h-[150vh] w-[200vh] rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle at center, transparent 53%, rgba(147,197,253,0.98) 55%, rgba(59,130,246,0.45) 60%, transparent 65%)",
-          maskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-          WebkitMaskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
+            "radial-gradient(circle at 50% 43%, transparent 49%, rgba(218,213,202,0.95) 50%, rgba(218,213,202,0.55) 52%, transparent 56%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 45%, white 72%, transparent 100%)",
+          maskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 45%, white 72%, transparent 100%)",
+          filter: "blur(0.6px)",
           mixBlendMode: "screen",
-          filter: "drop-shadow(0 0 40px rgba(147,197,253,0.18))",
+          opacity: 0.9
         }}
       />
 
-      {/* thin grid on rim */}
+      {/* Yakın atmosfer halo */}
       <div
-        className="absolute left-1/2 top-[48%] -translate-x-1/2 h-[150vh] w-[150vh] rounded-full opacity-20"
+        className="absolute inset-0 rounded-full"
         style={{
-          maskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-          WebkitMaskImage: "radial-gradient(140% 80% at 50% 40%, white, transparent 60%)",
-          backgroundImage:
-            "linear-gradient(rgba(147,197,253,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(147,197,253,0.06) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
+          background:
+            "radial-gradient(circle at 50% 43%, transparent 48%, rgba(67,78,81,0.55) 51%, rgba(67,78,81,0.25) 56%, transparent 68%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 40%, white 85%, transparent 100%)",
+          maskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 40%, white 85%, transparent 100%)",
+          filter: "blur(28px)",
+          mixBlendMode: "screen",
+          opacity: 0.75
+        }}
+      />
+
+      {/* Uzak, geniş halo (derinlik) */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 46%, transparent 45%, rgba(67,78,81,0.25) 55%, rgba(67,78,81,0.10) 62%, transparent 75%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 35%, white 90%, transparent 100%)",
+          maskImage:
+            "radial-gradient(120% 70% at 50% 0%, transparent 0%, white 35%, white 90%, transparent 100%)",
+          filter: "blur(60px)",
+          mixBlendMode: "screen",
+          opacity: 0.45
         }}
       />
     </div>
+
+    {/* ⭐️ Üst parlak yıldızlar – AYNI KALDI */}
+    <div 
+      className="absolute inset-0 opacity-60" 
+      style={{
+        background: `
+          radial-gradient(circle at 20% 30%, rgba(218,213,202,1) 0.5px, transparent 1.5px),
+          radial-gradient(circle at 80% 70%, rgba(67,78,81,1) 0.5px, transparent 1.5px),
+          radial-gradient(circle at 60% 20%, rgba(218,213,202,0.8) 0.5px, transparent 1.5px),
+          radial-gradient(circle at 40% 90%, rgba(67,78,81,0.9) 0.5px, transparent 1.5px),
+          radial-gradient(circle at 10% 80%, rgba(218,213,202,0.6) 0.5px, transparent 1.5px),
+          radial-gradient(circle at 90% 30%, rgba(67,78,81,0.7) 0.5px, transparent 1.5px)
+        `,
+        backgroundSize: '200px 200px, 180px 180px, 250px 250px, 220px 220px, 160px 160px, 190px 190px'
+      }} 
+    />
+  </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import BackgroundGradient from "./components/effects/BackgroundGradient";
+import AmbientLighting from "./components/effects/AmbientLighting";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { Hero, Services, Work, Process, About, Contact } from "./components/sections";
