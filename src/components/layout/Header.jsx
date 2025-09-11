@@ -24,11 +24,11 @@ export default function Header() {
               <img
                 src={logo}
                 alt="Codevia"
-                className="h-5 w-5 object-contain"
+                className="h-full w-full object-cover rounded-full"
                 onError={(e) => { e.currentTarget.style.display = "none"; }}
               />
             </div>
-            <span className="text-base font-semibold tracking-tight">Codevia Tech</span>
+            <span className="text-base font-semibold tracking-tight">Codevia </span>
           </a>
 
           <nav className="hidden md:flex items-center gap-1 text-sm">
