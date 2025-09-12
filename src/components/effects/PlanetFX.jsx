@@ -19,13 +19,13 @@ export default function PlanetFX({ className = "" }) {
     />
 
     {/* 🔵 Gezegen yayı – alt merkezden çıkan tek büyük yay */}
-    <div className="absolute left-1/2 bottom-[-33vh] -translate-x-1/2">
+    <div className="absolute left-1/2 bottom-[-39vh] -translate-x-1/2">
       {/* Planet body (çok koyu) – yalnızca üst yay görünsün diye maske */}
       <div
         className="rounded-full"
         style={{
-          width: "190vh",
-          height: "190vh",
+          width: "170vh",
+          height: "170vh",
           background:
             "radial-gradient(circle at 50% 45%, #0f1218 0%, #141823 55%, #1b1b22 50%, #1b1b22 85%)",
           WebkitMaskImage:

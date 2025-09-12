@@ -1,12 +1,34 @@
 // src/hooks/useSmoothScroll.js
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-export default function useSmoothScroll(enabled = true) {
+const useSmoothScroll = (enabled = true) => {
   useEffect(() => {
     if (!enabled) return;
-    const el = document.documentElement;
-    const prev = el.style.scrollBehavior;
-    el.style.scrollBehavior = "smooth";
-    return () => { el.style.scrollBehavior = prev || "auto"; };
+
+    const handleClick = (e) => {
+      const target = e.target.closest('a[href^="#"]');
+      if (!target) return;
+
+      const href = target.getAttribute('href');
+      if (href === '#') return;
+
+      const targetElement = document.querySelector(href);
+      if (!targetElement) return;
+
+      e.preventDefault();
+      
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    };
+
+    document.addEventListener('click', handleClick);
+    
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
   }, [enabled]);
-}
+};
+
+export default useSmoothScroll;
