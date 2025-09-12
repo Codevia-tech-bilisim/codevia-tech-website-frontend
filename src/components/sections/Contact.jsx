@@ -1,244 +1,155 @@
-import React from "react";
+import React, { useState } from "react";
 import Section from "../common/Section";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Send } from "lucide-react";
+import { motion } from "framer-motion";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
+import { useTranslation } from "../../contexts/TranslationContext";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  
   const { 
+    spacing, 
     isMobile, 
     isTablet, 
-    isTouch, 
-    spacing, 
     getTouchOptimizedSize 
   } = useSmartResponsive();
-
-  // Dynamic layout: mobile = stacked, desktop = side by side
-  const containerClass = isMobile ? "space-y-6" : "grid gap-8 md:grid-cols-2";
   
-  // Touch-optimized input and button sizes
+  const { t } = useTranslation();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const mailtoLink = `mailto:hello@codevia.com.tr?subject=İletişim: ${formData.name}&body=${formData.message}%0D%0A%0D%0Aİletişim Bilgileri:%0D%0AE-posta: ${formData.email}`;
+    window.location.href = mailtoLink;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const inputHeight = getTouchOptimizedSize(44);
-  const buttonHeight = getTouchOptimizedSize(48);
 
   return (
-    <Section 
-      id="contact" 
-      eyebrow="İletişim" 
-      title="Projelerinizi Konuşalım" 
-      desc="Fikirlerinizi gerçeğe dönüştürmek için buradayız. Hemen iletişime geçin!"
+    <Section
+      id="contact"
+      eyebrow={t('contactTitle')}
+      title={t('contactMainTitle')}
+      desc={t('contactDescription')}
     >
-      <div className={containerClass}>
-        {/* Contact Form */}
-        <div>
-          <form 
-            className="space-y-4" 
-            style={{ gap: `${spacing * 0.8}px` }}
-          >
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label 
-                  htmlFor="name" 
-                  className="block text-sm font-medium text-slate-300 mb-2"
-                  style={{ fontSize: isMobile ? '13px' : '14px' }}
-                >
-                  İsim Soyisim
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-400 backdrop-blur focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/10"
-                  placeholder="Adınızı yazın"
-                  style={{ 
-                    height: `${inputHeight}px`,
-                    fontSize: isMobile ? '14px' : '16px',
-                    padding: isTouch ? '8px 16px' : '6px 16px'
-                  }}
-                />
-              </div>
-              <div>
-                <label 
-                  htmlFor="email" 
-                  className="block text-sm font-medium text-slate-300 mb-2"
-                  style={{ fontSize: isMobile ? '13px' : '14px' }}
-                >
-                  E-posta
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-400 backdrop-blur focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/10"
-                  placeholder="email@example.com"
-                  style={{ 
-                    height: `${inputHeight}px`,
-                    fontSize: isMobile ? '14px' : '16px',
-                    padding: isTouch ? '8px 16px' : '6px 16px'
-                  }}
-                />
-              </div>
-            </div>
+      <div className="max-w-2xl mx-auto">
+        {/* Contact Form - Tek sütun, merkezi */}
+        <motion.div
+          className="rounded-2xl border border-white/10 bg-white/[0.04] p-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name Field */}
             <div>
               <label 
-                htmlFor="subject" 
-                className="block text-sm font-medium text-slate-300 mb-2"
+                className="block text-slate-300 mb-2"
                 style={{ fontSize: isMobile ? '13px' : '14px' }}
               >
-                Konu
+                {t('nameLabel')}
               </label>
               <input
                 type="text"
-                id="subject"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-400 backdrop-blur focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/10"
-                placeholder="Proje konusu"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder={t('namePlaceholder')}
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300"
                 style={{ 
+                  padding: `${spacing * 0.75}px ${spacing}px`,
                   height: `${inputHeight}px`,
-                  fontSize: isMobile ? '14px' : '16px',
-                  padding: isTouch ? '8px 16px' : '6px 16px'
+                  fontSize: isMobile ? '14px' : '15px'
                 }}
+                required
               />
             </div>
+
+            {/* Email Field */}
             <div>
               <label 
-                htmlFor="message" 
-                className="block text-sm font-medium text-slate-300 mb-2"
+                className="block text-slate-300 mb-2"
                 style={{ fontSize: isMobile ? '13px' : '14px' }}
               >
-                Mesaj
+                {t('emailLabel')}
               </label>
-              <textarea
-                id="message"
-                rows={isMobile ? 4 : 5}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-400 backdrop-blur focus:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/10 resize-none"
-                placeholder="Projeniz hakkında detayları yazın..."
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder={t('emailPlaceholder')}
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300"
                 style={{ 
-                  fontSize: isMobile ? '14px' : '16px',
-                  padding: isTouch ? '12px 16px' : '8px 16px'
+                  padding: `${spacing * 0.75}px ${spacing}px`,
+                  height: `${inputHeight}px`,
+                  fontSize: isMobile ? '14px' : '15px'
                 }}
+                required
               />
             </div>
-            <button
+
+            {/* Message Field */}
+            <div>
+              <label 
+                className="block text-slate-300 mb-2"
+                style={{ fontSize: isMobile ? '13px' : '14px' }}
+              >
+                {t('messageLabel')}
+              </label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder={t('messagePlaceholder')}
+                rows={6}
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300 resize-none"
+                style={{ 
+                  padding: `${spacing * 0.75}px ${spacing}px`,
+                  fontSize: isMobile ? '14px' : '15px'
+                }}
+                required
+              />
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
               type="submit"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#1f2a33] to-[#3e4a54] text-white font-medium shadow-lg hover:opacity-90 transition-all duration-300"
+              className="w-full bg-white text-slate-900 rounded-xl font-medium hover:bg-slate-100 transition-all duration-300 flex items-center justify-center gap-2"
               style={{ 
-                height: `${buttonHeight}px`,
-                fontSize: isMobile ? '14px' : '16px',
-                transform: isTouch ? 'scale(1)' : 'scale(1)',
-                padding: isTouch ? '12px 24px' : '8px 24px'
+                padding: `${spacing * 0.75}px ${spacing}px`,
+                height: `${getTouchOptimizedSize(48)}px`,
+                fontSize: isMobile ? '15px' : '16px'
               }}
-              onTouchStart={isTouch ? (e) => e.currentTarget.style.transform = 'scale(0.98)' : undefined}
-              onTouchEnd={isTouch ? (e) => e.currentTarget.style.transform = 'scale(1)' : undefined}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <Send className="h-4 w-4" />
-              Mesaj Gönder
-            </button>
+              {t('sendButton')}
+            </motion.button>
+
+            {/* Form Note */}
             <p 
-              className="text-xs text-slate-400 text-center"
+              className="text-slate-400 text-center"
               style={{ fontSize: isMobile ? '11px' : '12px' }}
             >
+              {t('formNote')}
             </p>
           </form>
-        </div>
-
-        {/* Contact Information */}
-        <div 
-          className="grid gap-4 rounded-3xl border border-white/10 bg-white/[0.04] shadow-sm"
-          style={{ padding: `${spacing}px` }}
-        >
-          <div className="flex items-start gap-3">
-            <div 
-              className="rounded-xl border border-white/10 bg-white/5 p-2 text-[#6b7b88] flex-shrink-0"
-              style={{ 
-                width: getTouchOptimizedSize(40), 
-                height: getTouchOptimizedSize(40),
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <Mail className="h-5 w-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p 
-                className="text-slate-400 mb-1"
-                style={{ fontSize: isMobile ? '12px' : '14px' }}
-              >
-                E-posta
-              </p>
-              <a 
-                href="mailto:info@codevia.tech" 
-                className="font-medium text-white hover:underline break-all"
-                style={{ fontSize: isMobile ? '14px' : '16px' }}
-              >
-                info@codevia.tech
-              </a>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <div 
-              className="rounded-xl border border-white/10 bg-white/5 p-2 text-[#6b7b88] flex-shrink-0"
-              style={{ 
-                width: getTouchOptimizedSize(40), 
-                height: getTouchOptimizedSize(40),
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <Phone className="h-5 w-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p 
-                className="text-slate-400 mb-1"
-                style={{ fontSize: isMobile ? '12px' : '14px' }}
-              >
-                Telefon
-              </p>
-              <a 
-                href="tel:+905438707575" 
-                className="font-medium text-white hover:text-blue-300 transition-colors"
-                style={{ 
-                  fontSize: isMobile ? '14px' : '16px',
-                  minHeight: isTouch ? '44px' : 'auto',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                +90 (543) 870 75 75
-              </a>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <div 
-              className="rounded-xl border border-white/10 bg-white/5 p-2 text-[#6b7b88] flex-shrink-0"
-              style={{ 
-                width: getTouchOptimizedSize(40), 
-                height: getTouchOptimizedSize(40),
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <MapPin className="h-5 w-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p 
-                className="text-slate-400 mb-1"
-                style={{ fontSize: isMobile ? '12px' : '14px' }}
-              >
-                Ofis
-              </p>
-              <div 
-                className="font-medium text-white"
-                style={{ fontSize: isMobile ? '13px' : '16px' }}
-              >
-                <p>Bahçelievler Mah. Doktor Cevdet Kara Cad.</p>
-                <p>E Blok No: 35 E /B22</p>
-                <p className="text-slate-300">Ankara Üniversitesi Teknokent</p>
-                <p className="text-slate-300">Ankara, Türkiye</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </Section>
   );

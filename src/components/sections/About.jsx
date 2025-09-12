@@ -1,6 +1,7 @@
 import React from "react";
 import Section from "../common/Section";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
+import { useTranslation } from "../../contexts/TranslationContext";
 
 export default function About() {
   const { 
@@ -9,6 +10,8 @@ export default function About() {
     isMobile, 
     isTablet 
   } = useSmartResponsive();
+  
+  const { t } = useTranslation();
 
   const techs = [
     "React", "Next.js", "TypeScript", "Node.js", "Express", 
@@ -23,20 +26,20 @@ export default function About() {
   const visibleTechs = isMobile ? techs.slice(0, 8) : techs;
 
   return (
-    <Section id="about" eyebrow="Hakkımızda" title="Biz Kimiz?">
+    <Section id="about" eyebrow={t('aboutEyebrow')} title={t('aboutTitle')}>
       <div className="max-w-4xl">
         <div className="prose prose-invert max-w-none">
           <p 
             className="text-lg leading-relaxed text-slate-300 mb-6"
             style={{ fontSize: isMobile ? '16px' : '18px' }}
           >
-            Codevia, <strong className="text-white">Ankara Üniversitesi kökenli genç ve dinamik bir ekibin</strong> girişimi olarak Ankara Teknokent'te kurulmuş bir teknoloji şirketidir. Amacımız, işletmelere ve girişimlere <strong className="text-white">güvenilir, ölçeklenebilir ve modern yazılım çözümleri</strong> sunarak iş süreçlerini dijital dünyada daha güçlü hale getirmektir.
+            {t('aboutDescription1')}
           </p>
           <p 
             className="text-base leading-relaxed text-slate-300 mb-6"
             style={{ fontSize: isMobile ? '14px' : '16px' }}
           >
-            Ekibimiz; bulut bilişim, DevOps, yapay zekâ ve mobil uygulama geliştirme konularında uzman mühendislerden oluşmaktadır. Akademik altyapımızı, yenilikçi bakış açımızla birleştirerek, hem Türkiye'de hem de küresel ölçekte fark yaratan projeler üretmeyi hedefliyoruz.
+            {t('aboutDescription2')}
           </p>
 
           {/* Vision & Mission Cards */}
@@ -56,13 +59,13 @@ export default function About() {
                 className="font-semibold text-white mb-3"
                 style={{ fontSize: isMobile ? '16px' : '18px' }}
               >
-                Vizyonumuz
+                {t('visionTitle')}
               </h4>
               <p 
                 className="text-slate-300"
                 style={{ fontSize: isMobile ? '13px' : '14px' }}
               >
-                Üniversite temelli girişim ruhumuzla teknoloji alanında Türkiye'nin öncü şirketlerinden biri olmak.
+                {t('visionDescription')}
               </p>
             </div>
             <div 
@@ -73,13 +76,13 @@ export default function About() {
                 className="font-semibold text-white mb-3"
                 style={{ fontSize: isMobile ? '16px' : '18px' }}
               >
-                Misyonumuz
+                {t('missionTitle')}
               </h4>
               <p 
                 className="text-slate-300"
                 style={{ fontSize: isMobile ? '13px' : '14px' }}
               >
-                İş ortaklarımıza şeffaf, sürdürülebilir ve yüksek kaliteli dijital çözümler sunarak uzun vadeli değer yaratmak.
+                {t('missionDescription')}
               </p>
             </div>
           </div>
@@ -91,7 +94,7 @@ export default function About() {
             className="font-semibold text-white mb-4"
             style={{ fontSize: isMobile ? '16px' : '18px' }}
           >
-            Teknoloji Yığınımız
+            {t('techStackTitle')}
           </h4>
           <div 
             className="flex flex-wrap"
@@ -117,7 +120,7 @@ export default function About() {
                   fontSize: '12px'
                 }}
               >
-                +{techs.length - 8} daha
+                +{techs.length - 8} {t('moreText')}
               </span>
             )}
           </div>

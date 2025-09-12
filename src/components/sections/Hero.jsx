@@ -3,6 +3,7 @@ import Container from "../common/Container";
 import PlanetFX from "../effects/PlanetFX";
 import TeknoKentExtrude3D from "../TeknoKentExtrude3D";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
+import { useTranslation } from "../../contexts/TranslationContext";
 
 export default function Hero() {
   const { 
@@ -12,6 +13,8 @@ export default function Hero() {
     isTablet, 
     spacing 
   } = useSmartResponsive();
+  
+  const { t } = useTranslation();
 
   // Dynamic sizing based on viewport
   const getResponsive3DSize = () => {
@@ -68,38 +71,25 @@ export default function Hero() {
       <Container>
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h1 className={`${textSizes.h1} font-bold leading-[1.1] tracking-tight`}>
-            Fikirler Sizden, Kod Bizden
+            {t('heroTitle')}
             <br className="hidden sm:block" />
-            <span className="text-white/90">Geleceği Birlikte Yazıyoruz</span>
+            <span className="text-white/90">{t('heroSubtitle')}</span>
           </h1>
 
           <p 
             className={`mx-auto mt-4 sm:mt-5 ${textSizes.maxWidth} ${textSizes.p} text-slate-300`}
             style={{ paddingLeft: spacing, paddingRight: spacing }}
           >
-            Codevia; kendi kendine servis edilebilen ekip araçları, analitik ve modern arayüzlerle yöneticilerinizi
-            güçlendirir, çalışanlarınızı her yerden bağlı tutar.
+            {t('heroDescription')}
           </p>
 
-          <div 
-            className="flex justify-center"
-            style={{ 
-              marginTop: spacing / 2004564654656454645635537373735753,
-              padding: `0 ${spacing}px`
-            }}
-          >
-            <div 
-              className="flex items-center justify-center"
-              style={{ 
-                width: '100%',
-                maxWidth: `${modelWidth}px`
-              }}
-            >
-              <TeknoKentExtrude3D 
-                width={modelWidth} 
-                height={modelHeight}
-              />
-            </div>
+          {/* TeknoKent 3D Logo - Orjinal */}
+          <div className="mt-6 sm:mt-8 flex justify-center">
+            <TeknoKentExtrude3D
+              width={modelWidth}
+              height={modelHeight}
+              bg="transparent"
+            />
           </div>
         </div>
       </Container>

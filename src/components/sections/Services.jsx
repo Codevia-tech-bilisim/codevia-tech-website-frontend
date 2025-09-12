@@ -1,144 +1,157 @@
 import React, { useState } from "react";
 import Section from "../common/Section";
+import { 
+  Code2, 
+  Smartphone, 
+  Brain, 
+  Palette,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Database,
+  Cloud,
+  Zap,
+  Users,
+  Figma,
+  PaintBucket,
+  Layers
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
-import { 
-  Code2, Smartphone, Brain, Palette, 
-  ChevronDown, ChevronUp, Zap, Globe, 
-  Layers, Monitor, Database, Cloud,
-  Figma, PaintBucket, Users, Target
-} from "lucide-react";
+import { useTranslation } from "../../contexts/TranslationContext";
 
 export default function Services() {
   const [showAllDetails, setShowAllDetails] = useState(false);
+  const [expandedService, setExpandedService] = useState(null);
+  
   const { 
     columns, 
-    isTouch, 
     spacing, 
-    getTextContent, 
-    getTouchOptimizedSize,
-    contentLevel,
-    isMobile 
+    isMobile, 
+    isTablet, 
+    getTouchOptimizedSize 
   } = useSmartResponsive();
+  
+  const { t } = useTranslation();
 
   const services = [
     { 
       icon: <Code2 className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "Web Geliştirme", 
+      title: t('webDev'), 
       descriptions: {
-        minimal: "React/Next web apps",
-        medium: "React/Next ile hızlı web uygulamaları",
-        full: "React/Next ile hızlı ve ölçeklenebilir web uygulamaları."
+        minimal: t('webDevDescMinimal'),
+        medium: t('webDevDescMedium'),
+        full: t('webDevDescFull')
       },
       details: {
         description: {
-          minimal: "Modern web teknolojileriyle performanslı web uygulamaları geliştiriyoruz.",
-          medium: "Modern web teknolojileriyle performanslı, SEO-uyumlu web uygulamaları geliştiriyoruz. Responsive tasarımdan API entegrasyonuna kadar çözümler.",
-          full: "Modern web teknolojileriyle performanslı, SEO-uyumlu ve kullanıcı dostu web uygulamaları geliştiriyoruz. Responsive tasarımdan API entegrasyonuna kadar tam kapsamlı çözümler sunuyoruz."
+          minimal: t('webDevDetailMinimal'),
+          medium: t('webDevDetailMedium'),
+          full: t('webDevDetailFull')
         },
-        technologies: ["React 19", "Next.js 14", "TypeScript", "Tailwind CSS", "Node.js", "Express"],
+        technologies: ["React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL"],
         features: [
-          "Server-Side Rendering (SSR) optimizasyonu",
-          "Progressive Web App (PWA) desteği", 
-          "RESTful API ve GraphQL entegrasyonu",
-          "Responsive ve mobile-first tasarım",
-          "SEO optimizasyonu ve performans tuning",
-          "Modern CI/CD deployment pipeline"
+          t('webDevFeature1'),
+          t('webDevFeature2'),
+          t('webDevFeature3'),
+          t('webDevFeature4'),
+          t('webDevFeature5'),
+          t('webDevFeature6')
         ],
         highlights: [
-          { icon: <Globe className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Global Erişim" },
-          { icon: <Zap className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Yüksek Performans" },
-          { icon: <Monitor className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Responsive Tasarım" }
+          { icon: <Zap className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('webDevHighlight1') },
+          { icon: <Cloud className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('webDevHighlight2') },
+          { icon: <Database className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('webDevHighlight3') }
         ]
       }
     },
     { 
       icon: <Smartphone className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "Mobil Uygulama", 
+      title: t('mobileDev'), 
       descriptions: {
-        minimal: "Kotlin Android apps",
-        medium: "Kotlin Compose ile modern Android uygulamaları",
-        full: "Kotlin Compose ile modern Android deneyimleri."
+        minimal: t('mobileDevDescMinimal'),
+        medium: t('mobileDevDescMedium'),
+        full: t('mobileDevDescFull')
       },
       details: {
         description: {
-          minimal: "Native Android uygulamaları ile mobil dünyada fark yaratıyoruz.",
-          medium: "Native Android uygulamaları ve modern UI/UX tasarımlarıyla mobil dünyada fark yaratıyoruz.",
-          full: "Native Android uygulamaları ve cross-platform çözümlerle mobil dünyada fark yaratıyoruz. Modern UI/UX tasarımlarıyla kullanıcı deneyimini ön planda tutuyoruz."
+          minimal: t('mobileDevDetailMinimal'),
+          medium: t('mobileDevDetailMedium'),
+          full: t('mobileDevDetailFull')
         },
         technologies: ["Kotlin", "Jetpack Compose", "Room Database", "Retrofit", "Hilt", "Coroutines"],
         features: [
-          "Jetpack Compose ile modern UI geliştirme",
-          "Offline-first architecture ve local storage",
-          "Push notifications ve real-time updates",
-          "Camera, GPS ve sensor entegrasyonları",
-          "Güvenli ödeme sistemleri entegrasyonu",
-          "Play Store optimize ve deployment"
+          t('mobileDevFeature1'),
+          t('mobileDevFeature2'),
+          t('mobileDevFeature3'),
+          t('mobileDevFeature4'),
+          t('mobileDevFeature5'),
+          t('mobileDevFeature6')
         ],
         highlights: [
-          { icon: <Smartphone className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Native Performance" },
-          { icon: <Database className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Offline Desteği" },
-          { icon: <Layers className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Modern Architecture" }
+          { icon: <Smartphone className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('mobileDevHighlight1') },
+          { icon: <Database className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('mobileDevHighlight2') },
+          { icon: <Layers className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('mobileDevHighlight3') }
         ]
       }
     },
     { 
       icon: <Brain className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "AI & Veri", 
+      title: t('aiData'), 
       descriptions: {
-        minimal: "ML ve veri analizi",
-        medium: "ML destekli özellikler ve veri panelleri",
-        full: "ML destekli özellikler, veri panelleri ve otomasyon."
+        minimal: t('aiDataDescMinimal'),
+        medium: t('aiDataDescMedium'),
+        full: t('aiDataDescFull')
       },
       details: {
         description: {
-          minimal: "Yapay zeka ve veri analizi ile işletmenizin karar verme süreçlerini güçlendiriyoruz.",
-          medium: "Yapay zeka ve veri analizi ile işletmenizin karar verme süreçlerini güçlendiriyoruz. Predictive analytics'ten chatbot'lara kadar geniş çözüm yelpazesi.",
-          full: "Yapay zeka ve veri analizi ile işletmenizin karar verme süreçlerini güçlendiriyoruz. Predictive analytics'ten chatbot'lara kadar geniş AI çözüm yelpazesi sunuyoruz."
+          minimal: t('aiDataDetailMinimal'),
+          medium: t('aiDataDetailMedium'),
+          full: t('aiDataDetailFull')
         },
-        technologies: ["Python", "TensorFlow", "scikit-learn", "Pandas", "FastAPI", "PostgreSQL"],
+        technologies: ["Python", "TensorFlow", "PyTorch", "FastAPI", "PostgreSQL", "Redis"],
         features: [
-          "Predictive analytics ve forecasting modelleri",
-          "Natural Language Processing (NLP) çözümleri",
-          "Computer vision ve image processing",
-          "Real-time data dashboard'ları",
-          "Automated report generation",
-          "Custom AI model training ve deployment"
+          t('aiDataFeature1'),
+          t('aiDataFeature2'),
+          t('aiDataFeature3'),
+          t('aiDataFeature4'),
+          t('aiDataFeature5'),
+          t('aiDataFeature6')
         ],
         highlights: [
-          { icon: <Brain className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Smart Algorithms" },
-          { icon: <Target className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Predictive Analytics" },
-          { icon: <Cloud className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Cloud AI Services" }
+          { icon: <Brain className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('aiDataHighlight1') },
+          { icon: <Database className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('aiDataHighlight2') },
+          { icon: <Zap className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('aiDataHighlight3') }
         ]
       }
     },
     { 
       icon: <Palette className="h-4 w-4 sm:h-5 sm:w-5" />, 
-      title: "UI / UX Tasarım", 
+      title: t('uiuxDesign'), 
       descriptions: {
-        minimal: "Modern UI/UX tasarım",
-        medium: "Şık ve erişilebilir arayüzler",
-        full: "Şık, erişilebilir ve tutarlı arayüzler."
+        minimal: t('uiuxDesignDescMinimal'),
+        medium: t('uiuxDesignDescMedium'),
+        full: t('uiuxDesignDescFull')
       },
       details: {
         description: {
-          minimal: "Kullanıcı odaklı tasarım prensipleriyle modern arayüzler tasarlıyoruz.",
-          medium: "Kullanıcı odaklı tasarım prensipleriyle modern, accessible arayüzler tasarlıyoruz. Design system'lerden prototyping'e kadar tasarım süreci yönetimi.",
-          full: "Kullanıcı odaklı tasarım prensipleriyle modern, accessible ve conversion-optimized arayüzler tasarlıyoruz. Design system'lerden prototyping'e kadar tam tasarım süreci yönetimi."
+          minimal: t('uiuxDesignDetailMinimal'),
+          medium: t('uiuxDesignDetailMedium'),
+          full: t('uiuxDesignDetailFull')
         },
         technologies: ["Figma", "Adobe XD", "Principle", "Framer", "Miro", "InVision"],
         features: [
-          "User research ve persona development",
-          "Wireframing ve interactive prototyping",
-          "Design system ve component library",
-          "Accessibility (WCAG) compliance",
-          "A/B testing ve conversion optimization",
-          "Responsive ve mobile-first yaklaşım"
+          t('uiuxDesignFeature1'),
+          t('uiuxDesignFeature2'),
+          t('uiuxDesignFeature3'),
+          t('uiuxDesignFeature4'),
+          t('uiuxDesignFeature5'),
+          t('uiuxDesignFeature6')
         ],
         highlights: [
-          { icon: <Users className="h-3 w-3 sm:h-4 sm:w-4" />, text: "User-Centered" },
-          { icon: <Figma className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Design Systems" },
-          { icon: <PaintBucket className="h-3 w-3 sm:h-4 sm:w-4" />, text: "Modern UI/UX" }
+          { icon: <Users className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('uiuxDesignHighlight1') },
+          { icon: <Figma className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('uiuxDesignHighlight2') },
+          { icon: <PaintBucket className="h-3 w-3 sm:h-4 sm:w-4" />, text: t('uiuxDesignHighlight3') }
         ]
       }
     },
@@ -161,118 +174,140 @@ export default function Services() {
   return (
     <Section
       id="services"
-      eyebrow="Hizmetlerimiz"
-      title="İhtiyacınıza odaklanan çözümler"
-      desc="MVP'den üretime, tasarımdan teslimata. Gereksiz karmaşa yok, net sonuç var."
+      eyebrow={t('servicesEyebrow')}
+      title={t('servicesTitle')}
+      desc={t('servicesDescription')}
     >
-      <div style={gridStyle} className="w-full">
-        {services.map((service, i) => (
+      <div style={gridStyle}>
+        {services.map((service, index) => (
           <motion.div
-            key={service.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            className="group rounded-2xl sm:rounded-3xl border border-white/10 bg-white/[0.04] shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset] backdrop-blur hover:bg-white/[0.06]"
+            key={index}
+            className="group relative rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-all duration-500 overflow-hidden backdrop-blur-sm"
+            style={{ padding: `${spacing}px` }}
+            whileHover={{ 
+              scale: isMobile ? 1 : 1.02,
+              y: isMobile ? 0 : -4 
+            }}
+            transition={{ duration: 0.3 }}
           >
-            <div className={`p-4 sm:p-5`} style={{ padding: `${spacing * 0.8}px` }}>
-              <div className="mb-3 inline-flex items-center justify-center rounded-lg sm:rounded-xl border border-white/10 bg-white/5 p-2 text-[#6b7b88]">
+            {/* Service Header */}
+            <div className="flex items-start justify-between mb-4">
+              <div 
+                className="rounded-xl bg-white/10 text-slate-300 group-hover:text-white group-hover:bg-white/20 transition-all duration-300 flex items-center justify-center"
+                style={{ 
+                  padding: `${spacing * 0.5}px`,
+                  minWidth: getTouchOptimizedSize(32),
+                  minHeight: getTouchOptimizedSize(32)
+                }}
+              >
                 {service.icon}
               </div>
-              
-              <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
+            </div>
+
+            {/* Service Content */}
+            <div className="space-y-3">
+              <h3 
+                className="font-semibold text-white group-hover:text-slate-50 transition-colors duration-300"
+                style={{ fontSize: isMobile ? '16px' : '18px' }}
+              >
                 {service.title}
               </h3>
               
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-3">
-                {getTextContent(service.descriptions)}
-              </p>
-              
-              <button
-                onClick={toggleDetails}
-                className={`flex items-center gap-2 text-xs sm:text-sm text-[#6b7b88] opacity-0 transition-all duration-300 group-hover:opacity-100 hover:text-white ${
-                  isTouch ? 'active:scale-95' : ''
-                }`}
+              <p 
+                className="text-slate-300 leading-relaxed"
                 style={{ 
-                  minHeight: `${buttonHeight}px`,
-                  padding: isTouch ? '8px 12px' : '4px 8px'
+                  fontSize: isMobile ? '13px' : '14px',
+                  lineHeight: '1.5'
                 }}
               >
-                {showAllDetails ? (
-                  <>
-                    Kapat <ChevronUp className="h-3 w-3 sm:h-4 sm:w-4" />
-                  </>
-                ) : (
-                  <>
-                    Detaylar <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
-                  </>
-                )}
+                {service.descriptions[
+                  isMobile ? 'minimal' : 
+                  isTablet ? 'medium' : 
+                  'full'
+                ]}
+              </p>
+
+              {/* Details Toggle */}
+              <button
+                onClick={() => setExpandedService(expandedService === index ? null : index)}
+                className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group/btn"
+                style={{ 
+                  fontSize: isMobile ? '12px' : '13px',
+                  minHeight: `${buttonHeight}px`
+                }}
+              >
+                <span className="group-hover/btn:underline">{t('details')}</span>
+                <ArrowRight className="h-3 w-3 group-hover/btn:translate-x-0.5 transition-transform" />
               </button>
             </div>
 
-            {/* Smart Details Section */}
+            {/* Expanded Details */}
             <AnimatePresence>
-              {showAllDetails && (
+              {expandedService === index && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
+                  animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="border-t border-white/10 bg-white/[0.02] overflow-hidden"
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden border-t border-white/10 mt-4"
+                  style={{ paddingTop: `${spacing * 0.75}px` }}
                 >
-                  <div className="p-4 sm:p-5 space-y-3 sm:space-y-4">
-                    {/* Adaptive Service Description */}
+                  <div className="space-y-4">
+                    {/* Detailed Description */}
                     <div>
-                      <h4 className="text-xs sm:text-sm font-semibold text-white mb-2">Hizmet Detayı</h4>
-                      <p className="text-xs text-slate-300 leading-relaxed">
-                        {getTextContent(service.details.description)}
+                      <h4 
+                        className="font-semibold text-white mb-2"
+                        style={{ fontSize: isMobile ? '13px' : '14px' }}
+                      >
+                        {t('aboutProject')}
+                      </h4>
+                      <p 
+                        className="text-slate-300 leading-relaxed"
+                        style={{ fontSize: isMobile ? '12px' : '13px' }}
+                      >
+                        {service.details.description[
+                          isMobile ? 'minimal' : 
+                          isTablet ? 'medium' : 
+                          'full'
+                        ]}
                       </p>
                     </div>
 
-                    {/* Highlights - Always show on mobile for quick overview */}
+                    {/* Highlights */}
                     <div>
-                      <h4 className="text-xs sm:text-sm font-semibold text-white mb-2">Öne Çıkan Özellikler</h4>
-                      <div className="grid grid-cols-1 gap-1 sm:gap-2">
+                      <h4 
+                        className="font-semibold text-white mb-2"
+                        style={{ fontSize: isMobile ? '13px' : '14px' }}
+                      >
+                        {t('highlights')}
+                      </h4>
+                      <div className="grid gap-2 grid-cols-1">
                         {service.details.highlights.map((highlight, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
+                          <div key={idx} className="flex items-center gap-2 text-slate-300"
+                               style={{ fontSize: isMobile ? '11px' : '12px' }}>
                             <div className="text-[#6b7b88] flex-shrink-0">
                               {highlight.icon}
                             </div>
-                            <span className="truncate">{highlight.text}</span>
+                            <span>{highlight.text}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    {/* Features - Show limited on mobile */}
-                    {(contentLevel !== 'minimal') && (
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-semibold text-white mb-2">Ana Özellikler</h4>
-                        <ul className="space-y-1 max-h-24 sm:max-h-32 overflow-y-auto">
-                          {service.details.features
-                            .slice(0, contentLevel === 'medium' ? 3 : 4)
-                            .map((feature, idx) => (
-                            <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
-                              <Zap className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#6b7b88] mt-0.5 flex-shrink-0" />
-                              <span className="leading-relaxed">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Technologies - Adaptive count */}
+                    {/* Technologies */}
                     <div className="pt-2 border-t border-white/5">
-                      <h4 className="text-xs font-semibold text-slate-400 mb-1">Teknolojiler</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {service.details.technologies
-                          .slice(0, contentLevel === 'minimal' ? 2 : contentLevel === 'medium' ? 3 : 4)
-                          .map((tech, idx) => (
-                          <span key={idx} className="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300 whitespace-nowrap">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+                      <h4 
+                        className="font-semibold text-slate-400 mb-1"
+                        style={{ fontSize: isMobile ? '11px' : '12px' }}
+                      >
+                        {t('techStack')}
+                      </h4>
+                      <p 
+                        className="text-slate-300 leading-relaxed"
+                        style={{ fontSize: isMobile ? '11px' : '12px' }}
+                      >
+                        {service.details.technologies.join(', ')}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
