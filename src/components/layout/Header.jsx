@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight, Menu, X, Globe } from "lucide-react";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
 import { useTranslation } from "../../contexts/TranslationContext";
-import logo from "../../assets/codevia-logo-c.png";
+// SVG logo import
+import logoSvg from "../../assets/codevia-logo.svg";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { isMobile, isTablet, spacing, getTouchOptimizedSize } = useSmartResponsive();
   const { t, language, toggleLanguage } = useTranslation();
+
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setScrolled(scrollTop > 80); // 50px scroll sonrası background değişir
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const links = [
     { label: t("services"), href: "#services" },
@@ -19,143 +32,203 @@ export default function Header() {
 
   // Dynamic sizing
   const headerHeight = getTouchOptimizedSize(48);
-  const logoSize = headerHeight - 8;
+  const logoContainerSize = headerHeight + 20; // Logo container boyutu
   const headerPadding = spacing * 0.3;
   const buttonHeight = getTouchOptimizedSize(32);
+  
+  // Logo bitiminden header başlangıcına kadar boşluk
+  const gapBetweenLogoAndHeader = 16; // 16px boşluk
+  const headerStartPosition = logoContainerSize + gapBetweenLogoAndHeader + 24; // Logo + boşluk + sol padding
 
   return (
     <>
-      {/* LOGO: Dışarıda, solda sabit */}
+      {/* LOGO: Yuvarlak krem renkli container ile */}
       <div
-        className="fixed top-4 left-4 z-50 flex items-center justify-center"
-        style={{ height: `${headerHeight}px` }}
+        className="fixed top-6 left-6 z-50 flex items-center justify-center"
+        style={{ 
+          width: `${logoContainerSize}px`, 
+          height: `${logoContainerSize}px` 
+        }}
       >
-        <a href="#home" className="block">
+        <a 
+          href="#home" 
+          className="relative flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-105"
+          style={{
+            width: `${logoContainerSize}px`,
+            height: `${logoContainerSize}px`,
+            background: `
+              radial-gradient(circle at 50% 40%, 
+                rgba(218,213,202,0.95) 0%, 
+                rgba(218,213,202,0.85) 40%, 
+                rgba(218,213,202,0.75) 70%, 
+                rgba(218,213,202,0.6) 100%
+              )
+            `,
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(218,213,202,0.3)',
+            boxShadow: `
+              0 4px 16px rgba(218,213,202,0.2),
+              inset 0 1px 0 rgba(255,255,255,0.3),
+              0 0 32px rgba(218,213,202,0.15)
+            `
+          }}
+        >
+          {/* Subtle inner glow */}
+          <div 
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `
+                radial-gradient(circle at 30% 30%, 
+                  rgba(255,255,255,0.4) 0%, 
+                  transparent 50%
+                )
+              `,
+              mixBlendMode: 'overlay'
+            }}
+          />
+          
+          {/* SVG Logo - 3.65x büyütülmüş */}
           <img
-            src={logo}
+            src={logoSvg}
             alt="Codevia"
-            className="drop-shadow-lg hover:scale-105 transition-transform duration-300"
-            style={{ width: `${logoSize}px`, height: `${logoSize}px` }}
+            className="relative z-10 h-[76%] w-[76%] object-contain"
+            style={{ 
+              transform: 'scale(3.65)', 
+              transformOrigin: '50% 51%',
+              filter: 'contrast(1.1) saturate(1.2)'
+            }}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         </a>
       </div>
 
-      {/* HEADER BAR */}
-      <header className="fixed top-0 left-0 right-0 z-40">
-        <div className="flex">
-          {/* Solda LOGO için boşluk: üst üste binmeyi engeller */}
-          <div
-            style={{ width: `${logoSize + 16}px` }}
-            className="flex-shrink-0"
-            aria-hidden="true"
-          />
-
-          {/* Header içeriği */}
-          <div className="flex-1 pr-4 pt-4">
+      {/* HEADER BAR - Logo ile aynı merkez hizasında + Scroll-based background */}
+      <header 
+        className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
+        style={{
+          backgroundColor: scrolled ? 'rgba(27, 27, 34, 0.98)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(8px)' : 'none',
+          paddingBottom: scrolled ? '24px' : '0px' // Alt boşluk eklendi
+        }}
+      >
+        <div 
+          className="flex items-center"
+          style={{ 
+            paddingTop: '24px', // Logo ile aynı top pozisyonu
+            paddingLeft: `${headerStartPosition}px` // Logo bitiminden sonra başla
+          }}
+        >
+          {/* Blurlu Header Container */}
+          <div className="flex-1 pr-6">
             <div
-              className="rounded-full border border-white/10 bg-white/5 backdrop-blur-lg"
+              className="rounded-full border border-white/10 bg-white/5 backdrop-blur-lg flex items-center justify-between"
               style={{
-                padding: `${headerPadding}px ${headerPadding * 1.2}px`,
-                height: `${headerHeight}px`,
+                padding: `${headerPadding}px ${headerPadding * 2}px`,
+                height: `${logoContainerSize}px`, // Logo ile aynı yükseklik
               }}
             >
-              {/* Grid: [Sol - Orta - Sağ] */}
-              <div className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-3">
-                {/* SOL: Codevia yazısı (header'ın içinde) */}
-                <div className="pl-1">
-                  <span className="font-bold text-white text-lg leading-none select-none">
-                    Codevia
-                  </span>
-                </div>
-
-                {/* ORTA: Desktop Navigation (tam ortalı) */}
-                {!isMobile && (
-                  <nav className="flex justify-center items-center gap-1">
-                    {links.map((link) => (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        className="px-3 py-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
-                        style={{
-                          fontSize: isTablet ? "12px" : "13px",
-                          minHeight: `${buttonHeight}px`,
-                        }}
-                      >
-                        {link.label}
-                      </a>
-                    ))}
-                  </nav>
-                )}
-
-                {/* SAĞ: Dil & Mobil butonlar */}
-                <div className="flex items-center justify-end gap-2">
-                  {!isMobile && (
-                    <button
-                      onClick={toggleLanguage}
-                      className="px-2.5 py-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 flex items-center gap-1"
-                      style={{
-                        fontSize: isTablet ? "11px" : "12px",
-                        minHeight: `${buttonHeight}px`,
-                      }}
-                    >
-                      <Globe className="h-4 w-4" />
-                      {language.toUpperCase()}
-                    </button>
-                  )}
-
-                  {isMobile && (
-                    <>
-                      <button
-                        onClick={toggleLanguage}
-                        className="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
-                        style={{ minHeight: `${buttonHeight}px`, minWidth: `${buttonHeight}px` }}
-                        aria-label="Change language"
-                      >
-                        <Globe className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        onClick={() => setOpen((v) => !v)}
-                        className="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
-                        style={{ minHeight: `${buttonHeight}px`, minWidth: `${buttonHeight}px` }}
-                        aria-label="Toggle menu"
-                      >
-                        {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* MOBİL MENÜ: header barın altında */}
-            {isMobile && open && (
-              <div
-                className="mt-2 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg overflow-hidden"
-                style={{ padding: `${spacing * 0.5}px` }}
+              {/* Sol: Codevia yazısı - logo ile aynı merkez hizasında */}
+              <div 
+                className="text-white font-bold text-xl select-none flex items-center justify-center"
+                style={{ height: '100%' }}
               >
-                <nav className="flex flex-col">
-                  {links.map((link) => (
+                Codevia
+              </div>
+
+              {/* Orta: Navigation - sadece desktop'ta */}
+              {!isMobile && (
+                <nav className="flex items-center gap-6">
+                  {links.map((link, index) => (
                     <a
-                      key={link.href}
+                      key={index}
                       href={link.href}
-                      onClick={() => setOpen(false)}
-                      className="flex items-center justify-between px-3 py-2.5 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
-                      style={{
-                        fontSize: "14px",
-                        minHeight: `${getTouchOptimizedSize(44)}px`,
-                      }}
+                      className="text-white/80 hover:text-white transition-colors duration-200 font-medium"
                     >
                       {link.label}
-                      <ArrowRight className="h-3.5 w-3.5 opacity-50" />
                     </a>
                   ))}
                 </nav>
+              )}
+
+              {/* Sağ: Dil + Teklif Al butonu */}
+              <div className="flex items-center gap-3">
+                {/* Language Toggle */}
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200"
+                  style={{ height: `${buttonHeight}px` }}
+                >
+                  <Globe className="h-4 w-4" />
+                  <span className="text-sm font-medium">
+                    {language === 'tr' ? 'EN' : 'TR'}
+                  </span>
+                </button>
+
+                {/* Teklif Al butonu - Logo ışıması renklerinde */}
+                <a
+                  href="#contact"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 font-medium text-slate-800 hover:scale-105"
+                  style={{ 
+                    height: `${buttonHeight + 4}px`,
+                    background: `
+                      radial-gradient(circle at 50% 40%, 
+                        rgba(218,213,202,0.95) 0%, 
+                        rgba(218,213,202,0.85) 40%, 
+                        rgba(218,213,202,0.75) 70%, 
+                        rgba(218,213,202,0.6) 100%
+                      )
+                    `,
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(218,213,202,0.4)',
+                    boxShadow: `
+                      0 4px 12px rgba(218,213,202,0.25),
+                      inset 0 1px 0 rgba(255,255,255,0.4),
+                      0 0 20px rgba(218,213,202,0.15)
+                    `
+                  }}
+                >
+                  <span className="text-sm font-semibold">
+                    {language === 'tr' ? 'Teklif Al' : 'Get Quote'}
+                  </span>
+                </a>
+
+                {/* Mobile menu button */}
+                {isMobile && (
+                  <button
+                    onClick={() => setOpen(!open)}
+                    className="flex items-center justify-center text-white hover:text-white/80 transition-colors duration-200 ml-2"
+                    style={{ 
+                      width: `${buttonHeight}px`, 
+                      height: `${buttonHeight}px` 
+                    }}
+                  >
+                    {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                  </button>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobile && open && (
+          <div className="absolute top-full left-4 right-4 mt-2 p-4 rounded-2xl bg-black/80 backdrop-blur-lg border border-white/10">
+            <nav className="flex flex-col gap-3">
+              {links.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between p-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200"
+                >
+                  <span>{link.label}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
     </>
   );
 }
-

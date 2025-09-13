@@ -128,11 +128,27 @@ export default function Contact() {
             {/* Submit Button */}
             <motion.button
               type="submit"
-              className="w-full bg-white text-slate-900 rounded-xl font-medium hover:bg-slate-100 transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105"
               style={{ 
                 padding: `${spacing * 0.75}px ${spacing}px`,
                 height: `${getTouchOptimizedSize(48)}px`,
-                fontSize: isMobile ? '15px' : '16px'
+                fontSize: isMobile ? '15px' : '16px',
+                color: 'rgba(32,32,32,0.9)',   // yazı rengi (ikinci örnekte text-slate-800 vardı)
+                background: `
+                  radial-gradient(circle at 50% 40%, 
+                    rgba(218,213,202,0.95) 0%, 
+                    rgba(218,213,202,0.85) 40%, 
+                    rgba(218,213,202,0.75) 70%, 
+                    rgba(218,213,202,0.6) 100%
+                  )
+                `,
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(218,213,202,0.4)',
+                boxShadow: `
+                  0 4px 12px rgba(218,213,202,0.25),
+                  inset 0 1px 0 rgba(255,255,255,0.4),
+                  0 0 20px rgba(218,213,202,0.15)
+                `
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -141,13 +157,8 @@ export default function Contact() {
               {t('sendButton')}
             </motion.button>
 
+
             {/* Form Note */}
-            <p 
-              className="text-slate-400 text-center"
-              style={{ fontSize: isMobile ? '11px' : '12px' }}
-            >
-              {t('formNote')}
-            </p>
           </form>
         </motion.div>
       </div>

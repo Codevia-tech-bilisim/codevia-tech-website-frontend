@@ -1,9 +1,8 @@
 import React from "react";
 import Container from "../common/Container";
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, Instagram } from "lucide-react";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
 import { useTranslation } from "../../contexts/TranslationContext";
-import logo from "../../assets/codevia-logo-c.png";
 import logoSvg from "../../assets/codevia-logo.svg";
 
 export default function Footer() {
@@ -39,13 +38,13 @@ export default function Footer() {
   const contactInfo = [
     {
       icon: <Mail className="h-4 w-4" />,
-      value: "hello@codevia.com.tr",
-      href: "mailto:hello@codevia.com.tr"
+      value: "info@codevia.com.tr",
+      href: "mailto:info@codevia.com.tr"
     },
     {
       icon: <Phone className="h-4 w-4" />,
-      value: "+90 (312) 555 0123",
-      href: "tel:+903125550123"
+      value: "+90 543 870 75 75",
+      href: "tel:+905438707575"
     },
     {
       icon: <MapPin className="h-4 w-4" />,
@@ -55,12 +54,24 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { icon: <Github className="h-4 w-4" />, href: "#", name: "GitHub" },
-    { icon: <Linkedin className="h-4 w-4" />, href: "#", name: "LinkedIn" },
-    { icon: <Twitter className="h-4 w-4" />, href: "#", name: "Twitter" }
+    { 
+      icon: <Github className="h-4 w-4" />, 
+      href: "https://github.com/Codevia-tech-bilisim", 
+      name: "GitHub" 
+    },
+    { 
+      icon: <Linkedin className="h-4 w-4" />, 
+      href: "https://www.linkedin.com/company/codeviatech/?viewAsMember=true", 
+      name: "LinkedIn" 
+    },
+    { 
+      icon: <Instagram className="h-4 w-4" />, 
+      href: "https://www.instagram.com/codeviatech/", 
+      name: "Instagram" 
+    }
   ];
 
-  const logoSize = isMobile ? 40 : 48;
+  const logoContainerSize = isMobile ? 52 : 60; // Footer logo container boyutu (Header'den biraz küçük)
 
   return (
     <footer className="border-t border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -76,25 +87,57 @@ export default function Footer() {
             {/* Company Info */}
             <div className={`${isMobile ? '' : 'lg:col-span-2'} space-y-4`}>
               <div className="flex items-center gap-3">
+                {/* Logo Container - Header stilinde */}
                 <div
-                  className="relative flex items-center justify-center overflow-hidden rounded-full"
-                  style={{ width: `${logoSize}px`, height: `${logoSize}px` }}
+                  className="relative flex items-center justify-center rounded-full"
+                  style={{ 
+                    width: `${logoContainerSize}px`, 
+                    height: `${logoContainerSize}px`,
+                    background: `
+                      radial-gradient(circle at 50% 40%, 
+                        rgba(218,213,202,0.85) 0%, 
+                        rgba(218,213,202,0.75) 40%, 
+                        rgba(218,213,202,0.65) 70%, 
+                        rgba(218,213,202,0.5) 100%
+                      )
+                    `,
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(218,213,202,0.25)',
+                    boxShadow: `
+                      0 3px 12px rgba(218,213,202,0.15),
+                      inset 0 1px 0 rgba(255,255,255,0.25),
+                      0 0 24px rgba(218,213,202,0.1)
+                    `
+                  }}
                 >
-                  <div className="absolute inset-0 rounded-full bg-white/30 border border-white/20 backdrop-blur-xl"
-                       style={{
-                         background: "radial-gradient(circle, rgba(255,248,230,0.85) 0%, rgba(255,248,230,0.55) 70%, rgba(255,248,230,0.25) 100%)"
-                       }}
+                  {/* Subtle inner glow */}
+                  <div 
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: `
+                        radial-gradient(circle at 30% 30%, 
+                          rgba(255,255,255,0.3) 0%, 
+                          transparent 50%
+                        )
+                      `,
+                      mixBlendMode: 'overlay'
+                    }}
                   />
+                  
+                  {/* SVG Logo - Header ile aynı scaling */}
                   <img
                     src={logoSvg}
                     alt="Codevia"
-                    className="relative z-10 drop-shadow-sm"
+                    className="relative z-10 h-[76%] w-[76%] object-contain"
                     style={{ 
-                      width: `${logoSize * 0.7}px`, 
-                      height: `${logoSize * 0.7}px` 
+                      transform: 'scale(3.5)', 
+                      transformOrigin: '50% 51%',
+                      filter: 'contrast(1.1) saturate(1.2)'
                     }}
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
                 </div>
+                
                 <div>
                   <h3 
                     className="font-bold text-white"
@@ -189,22 +232,24 @@ export default function Footer() {
           <div 
             className={`pt-6 border-t border-white/10 flex ${isMobile ? 'flex-col gap-4' : 'flex-row justify-between items-center'}`}
           >
-            {/* Copyright */}
+            {/* Copyright - 2025 güncellemesi */}
             <p 
               className="text-slate-400"
               style={{ fontSize: isMobile ? '12px' : '13px' }}
             >
-              © 2024 Codevia. {t('allRightsReserved')}.
+              © 2025 Codevia. {t('allRightsReserved')}.
             </p>
 
-            {/* Social Links */}
+            {/* Social Links - GitHub, LinkedIn, Instagram */}
             <div className="flex items-center gap-4">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="p-2 rounded-full bg-white/10 text-slate-300 hover:text-white hover:bg-white/20 transition-all duration-300"
+                  className="p-2 rounded-full bg-white/10 text-slate-300 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
                 >
                   {social.icon}
                 </a>
