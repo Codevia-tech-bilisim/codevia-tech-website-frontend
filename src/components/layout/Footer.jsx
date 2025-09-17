@@ -71,7 +71,7 @@ export default function Footer() {
     }
   ];
 
-  const logoContainerSize = isMobile ? 52 : 60; // Footer logo container boyutu (Header'den biraz küçük)
+  const logoContainerSize = isMobile ? 52 : 60;
 
   return (
     <footer className="border-t border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -87,7 +87,7 @@ export default function Footer() {
             {/* Company Info */}
             <div className={`${isMobile ? '' : 'lg:col-span-2'} space-y-4`}>
               <div className="flex items-center gap-3">
-                {/* Logo Container - Header stilinde */}
+                {/* Logo Container */}
                 <div
                   className="relative flex items-center justify-center rounded-full"
                   style={{ 
@@ -110,7 +110,6 @@ export default function Footer() {
                     `
                   }}
                 >
-                  {/* Subtle inner glow */}
                   <div 
                     className="absolute inset-0 rounded-full"
                     style={{
@@ -124,7 +123,6 @@ export default function Footer() {
                     }}
                   />
                   
-                  {/* SVG Logo - Header ile aynı scaling */}
                   <img
                     src={logoSvg}
                     alt="Codevia"
@@ -181,58 +179,62 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Services Links */}
-            <div className="space-y-4">
-              <h4 
-                className="font-semibold text-white"
-                style={{ fontSize: isMobile ? '15px' : '16px' }}
-              >
-                {footerLinks.services.title}
-              </h4>
-              <ul className="space-y-2">
-                {footerLinks.services.links.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.href}
-                      className="text-slate-300 hover:text-white transition-colors duration-300"
-                      style={{ fontSize: isMobile ? '13px' : '14px' }}
-                    >
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Services Links - Sadece Desktop'ta göster */}
+            {!isMobile && (
+              <div className="space-y-4">
+                <h4 
+                  className="font-semibold text-white"
+                  style={{ fontSize: isMobile ? '15px' : '16px' }}
+                >
+                  {footerLinks.services.title}
+                </h4>
+                <ul className="space-y-2">
+                  {footerLinks.services.links.map((link, index) => (
+                    <li key={index}>
+                      <a
+                        href={link.href}
+                        className="text-slate-300 hover:text-white transition-colors duration-300"
+                        style={{ fontSize: isMobile ? '13px' : '14px' }}
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-            {/* Company Links */}
-            <div className="space-y-4">
-              <h4 
-                className="font-semibold text-white"
-                style={{ fontSize: isMobile ? '15px' : '16px' }}
-              >
-                {footerLinks.company.title}
-              </h4>
-              <ul className="space-y-2">
-                {footerLinks.company.links.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.href}
-                      className="text-slate-300 hover:text-white transition-colors duration-300"
-                      style={{ fontSize: isMobile ? '13px' : '14px' }}
-                    >
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Company Links - Sadece Desktop'ta göster */}
+            {!isMobile && (
+              <div className="space-y-4">
+                <h4 
+                  className="font-semibold text-white"
+                  style={{ fontSize: isMobile ? '15px' : '16px' }}
+                >
+                  {footerLinks.company.title}
+                </h4>
+                <ul className="space-y-2">
+                  {footerLinks.company.links.map((link, index) => (
+                    <li key={index}>
+                      <a
+                        href={link.href}
+                        className="text-slate-300 hover:text-white transition-colors duration-300"
+                        style={{ fontSize: isMobile ? '13px' : '14px' }}
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
-          {/* Bottom Section */}
+          {/* Bottom Sectionn */}
           <div 
             className={`pt-6 border-t border-white/10 flex ${isMobile ? 'flex-col gap-4' : 'flex-row justify-between items-center'}`}
           >
-            {/* Copyright - 2025 güncellemesi */}
+            {/* Copyright */}
             <p 
               className="text-slate-400"
               style={{ fontSize: isMobile ? '12px' : '13px' }}
@@ -240,7 +242,7 @@ export default function Footer() {
               © 2025 Codevia. {t('allRightsReserved')}.
             </p>
 
-            {/* Social Links - GitHub, LinkedIn, Instagram */}
+            {/* Social Links */}
             <div className="flex items-center gap-4">
               {socialLinks.map((social, index) => (
                 <a
