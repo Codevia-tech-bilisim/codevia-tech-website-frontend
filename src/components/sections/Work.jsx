@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Section from "../common/Section";
 import { 
@@ -59,38 +58,45 @@ export default function Work() {
       }
     },
     {
-      title: "PropTech Suite",
-      category: t('propTech'),
+      title: "RestaurantTech Suite",
+      category: t('restaurantTech'),
       status: t('comingSoon'),
       statusColor: "bg-amber-500/20 text-amber-300",
-      description: t('propTechDesc'),
-      icon: <Building className="h-4 w-4" />,
+      description: t('restaurantTechDesc'),
+      icon: <Home className="h-4 w-4" />,
       details: {
-        description: t('propTechDetailDesc'),
+        description: t('restaurantTechDetailDesc'),
         highlights: [
-          { icon: <Home className="h-3 w-3" />, text: t('propTechHighlight1') },
-          { icon: <Briefcase className="h-3 w-3" />, text: t('propTechHighlight2') },
-          { icon: <Shield className="h-3 w-3" />, text: t('propTechHighlight3') },
-          { icon: <Zap className="h-3 w-3" />, text: t('propTechHighlight4') }
+          { icon: <Briefcase className="h-3 w-3" />, text: t('restaurantTechHighlight1') },
+          { icon: <Shield className="h-3 w-3" />, text: t('restaurantTechHighlight2') },
+          { icon: <Users className="h-3 w-3" />, text: t('restaurantTechHighlight3') },
+          { icon: <Zap className="h-3 w-3" />, text: t('restaurantTechHighlight4') }
         ],
         features: [
-          t('propTechFeature1'),
-          t('propTechFeature2'),
-          t('propTechFeature3'),
-          t('propTechFeature4'),
-          t('propTechFeature5'),
-          t('propTechFeature6')
+          t('restaurantTechFeature1'),
+          t('restaurantTechFeature2'),
+          t('restaurantTechFeature3'),
+          t('restaurantTechFeature4'),
+          t('restaurantTechFeature5'),
+          t('restaurantTechFeature6')
         ],
-        techStack: t('propTechTechStack')
+        techStack: t('restaurantTechTechStack')
       }
     }
   ];
 
-  // Dynamic grid styling
-  const gridStyle = {
-    display: 'grid',
-    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+  // FLEXBOX LAYOUT - Her kutucuk kendi yüksekliğini korur
+  const containerStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
     gap: `${spacing}px`,
+  };
+
+  // Her kutucuk için width hesaplaması
+  const getCardWidth = () => {
+    if (isMobile) return '100%'; // Mobilde tek sütun
+    if (isTablet) return `calc(50% - ${spacing/2}px)`; // Tablet'te iki sütun
+    return `calc(50% - ${spacing/2}px)`; // Desktop'ta iki sütun (2 proje var)
   };
 
   return (
@@ -100,12 +106,17 @@ export default function Work() {
       title={t('workTitle')}
       desc={t('workDescription')}
     >
-      <div style={gridStyle}>
+      <div style={containerStyle}>
         {projects.map((project, index) => (
           <motion.div
             key={index}
             className="group relative rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-all duration-500 overflow-hidden"
-            style={{ padding: `${spacing}px` }}
+            style={{ 
+              padding: `${spacing}px`,
+              width: getCardWidth(),
+              alignSelf: 'flex-start', // Her kutucuk kendi yüksekliğini korur
+              minHeight: '320px' // Başlangıçta eşit yükseklik için
+            }}
             whileHover={{ 
               scale: isMobile ? 1 : 1.02,
               y: isMobile ? 0 : -4 

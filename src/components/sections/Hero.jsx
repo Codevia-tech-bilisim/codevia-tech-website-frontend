@@ -16,10 +16,10 @@ export default function Hero() {
   
   const { t } = useTranslation();
 
-  // Dynamic sizing based on viewport - ORİJİNAL
+  // Dynamic sizing based on viewport - MOBİLDE DAHA KOMPAKT
   const getResponsive3DSize = () => {
     if (isMobile) {
-      return { width: Math.min(width - 40, 300), height: 120 };
+      return { width: Math.min(width - 40, 280), height: 100 }; // Daha küçük
     } else if (isTablet) {
       return { width: Math.min(width - 80, 400), height: 180 };
     } else {
@@ -29,12 +29,12 @@ export default function Hero() {
 
   const { width: modelWidth, height: modelHeight } = getResponsive3DSize();
 
-  // Dynamic text sizing - ORİJİNAL
+  // Dynamic text sizing - MOBİLDE DAHA KÜÇÜK
   const getTextSizes = () => {
     if (isMobile) {
       return {
-        h1: 'text-3xl',
-        p: 'text-base',
+        h1: 'text-2xl sm:text-3xl', // Daha küçük başlık
+        p: 'text-sm', // Daha küçük paragraf
         maxWidth: 'max-w-full'
       };
     } else if (isTablet) {
@@ -54,22 +54,24 @@ export default function Hero() {
 
   const textSizes = getTextSizes();
 
-  // Dynamic padding - NAV BAR ÇAKIŞMASINI ÖNLEMEK İÇİN MOBİLDE DAHA FAZLA
+  // ORİJİNAL PADDING - SADECE VIEWPORT YÜKSEKLIĞI EKLENDİ
   const sectionPadding = {
-    paddingTop: isMobile ? spacing * 15 : isTablet ? spacing * 7 : spacing * 8, // MOBİLDE 15X
-    paddingBottom: spacing * 2
+    paddingTop: isMobile ? spacing * 12 : isTablet ? spacing * 7 : spacing * 8, // ORİJİNAL MOBİL 15X
+    paddingBottom: spacing * 2, // ORİJİNAL
+    minHeight: isMobile ? '65vh' : '100vh', // MOBİLDE KÜÇÜK MIN-HEIGHT
+    maxHeight: isMobile ? '75vh' : 'none' // MOBİLDE MAX-HEIGHT SINIRI
   };
 
   return (
     <section 
       id="home" 
-      className="relative isolate overflow-hidden min-h-screen"
+      className="relative isolate overflow-hidden flex items-center"
       style={sectionPadding}
     >
       {/* PlanetFX - ORİJİNAL KORUNDU */}
       <PlanetFX />
       
-      {/* MOBİL İÇİN SADECE KONTRAST OVERLAYİ EKLENDİ */}
+      {/* MOBİL İÇİN KONTRAST OVERLAYİ */}
       {isMobile && (
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-slate-800/20 to-slate-700/30 pointer-events-none" />
       )}
@@ -79,7 +81,6 @@ export default function Hero() {
           <h1 
             className={`${textSizes.h1} font-bold leading-[1.1] tracking-tight`}
             style={{
-              // MOBİL İÇİN SADECE TEXT SHADOW EKLENDİ
               textShadow: isMobile ? '0 2px 4px rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.3)' : undefined
             }}
           >
@@ -100,15 +101,14 @@ export default function Hero() {
             style={{ 
               paddingLeft: spacing, 
               paddingRight: spacing,
-              // MOBİL İÇİN SADECE TEXT SHADOW EKLENDİ
               textShadow: isMobile ? '0 1px 2px rgba(0,0,0,0.6)' : undefined,
-              lineHeight: isMobile ? '1.6' : undefined
+              lineHeight: isMobile ? '1.6' : undefined // ORİJİNAL 1.6
             }}
           >
             {t('heroDescription')}
           </p>
 
-          {/* TeknoKent 3D Logo - ORİJİNAL AYNEN KORUNDU */}
+          {/* TeknoKent 3D Logo - ORİJİNAL MARGIN */}
           <div className="mt-6 sm:mt-8 flex justify-center">
             <TeknoKentExtrude3D
               width={modelWidth}

@@ -161,11 +161,18 @@ export default function Services() {
     setShowAllDetails(!showAllDetails);
   };
 
-  // Dynamic grid styling based on calculated columns
-  const gridStyle = {
-    display: 'grid',
-    gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+  // FLEXBOX LAYOUT - Her kutucuk kendi yüksekliğini korur
+  const containerStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
     gap: `${spacing}px`,
+  };
+
+  // Her kutucuk için width hesaplaması
+  const getCardWidth = () => {
+    if (isMobile) return '100%'; // Mobilde tek sütun
+    if (isTablet) return `calc(50% - ${spacing/2}px)`; // Tablet'te iki sütun
+    return `calc(25% - ${spacing * 0.75}px)`; // Desktop'ta dört sütun (4 kutucuk yan yana)
   };
 
   // Touch-optimized button size
@@ -178,12 +185,16 @@ export default function Services() {
       title={t('servicesTitle')}
       desc={t('servicesDescription')}
     >
-      <div style={gridStyle}>
+      <div style={containerStyle}>
         {services.map((service, index) => (
           <motion.div
             key={index}
             className="group relative rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-all duration-500 overflow-hidden backdrop-blur-sm"
-            style={{ padding: `${spacing}px` }}
+            style={{ 
+              padding: `${spacing}px`,
+              width: getCardWidth(),
+              alignSelf: 'flex-start' // Her kutucuk kendi yüksekliğini korur
+            }}
             whileHover={{ 
               scale: isMobile ? 1 : 1.02,
               y: isMobile ? 0 : -4 
