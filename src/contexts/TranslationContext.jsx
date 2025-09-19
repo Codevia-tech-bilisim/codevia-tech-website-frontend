@@ -10,8 +10,8 @@ export const useTranslation = () => {
 };
 export const TranslationProvider = ({ children }) => {
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'tr';
-  });
+  return localStorage.getItem('language') || 'en';
+});
   useEffect(() => {
     localStorage.setItem('language', language);
     document.documentElement.lang = language;
