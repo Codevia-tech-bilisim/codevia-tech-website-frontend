@@ -104,9 +104,11 @@ export default function Header() {
             alt="Codevia"
             className="relative z-10 h-[76%] w-[76%] object-contain"
             style={{ 
-              transform: 'scale(3.65)',
+              transform: isMobile ? 'scale(2.8)' : 'scale(3.65)',
               transformOrigin: '50% 51%',
-              filter: 'contrast(1.1) saturate(1.2)'
+              filter: 'contrast(1.1) saturate(1.2)',
+              imageRendering: 'crisp-edges',
+              WebkitImageRendering: 'crisp-edges'
             }}
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
