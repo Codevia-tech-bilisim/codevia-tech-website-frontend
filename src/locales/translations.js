@@ -11,8 +11,8 @@ export const translations = {
     language: "Dil",
     
     // Hero Section
-    heroTitle: "Fikirlerinizden Güç Alıp",
-    heroSubtitle: "Gerçeğe Dönüştürüyoruz",
+    heroTitle: "Ideas From You",
+    heroSubtitle: "Code From Us",
     heroDescription: "Codevia; ekipler için basit, hızlı ve modern çözümler sunar. Analitik gücü ve kullanıcı dostu arayüzleriyle yöneticilerin işini kolaylaştırır, ekipleri her zaman bağlı tutar.",
     getStarted: "Başlayalım",
     
