@@ -70,12 +70,7 @@ export default function Hero() {
     >
       {/* PlanetFX - ORİJİNAL KORUNDU */}
       <PlanetFX />
-      
-      {/* MOBİL İÇİN KONTRAST OVERLAYİ */}
-      {isMobile && (
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-slate-800/20 to-slate-700/30 pointer-events-none" />
-      )}
-      
+            
       <Container>
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h1 
