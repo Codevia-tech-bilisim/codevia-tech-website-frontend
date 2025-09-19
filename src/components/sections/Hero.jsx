@@ -33,7 +33,7 @@ export default function Hero() {
   const getTextSizes = () => {
     if (isMobile) {
       return {
-        h1: 'text-2xl sm:text-3xl', // Daha küçük başlık
+        h1: 'text-4xl sm:text-5xl', // Daha küçük başlık
         p: 'text-sm', // Daha küçük paragraf
         maxWidth: 'max-w-full'
       };

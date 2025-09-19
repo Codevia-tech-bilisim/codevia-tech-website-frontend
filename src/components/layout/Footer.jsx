@@ -130,7 +130,9 @@ export default function Footer() {
                     style={{ 
                       transform: 'scale(3.5)', 
                       transformOrigin: '50% 51%',
-                      filter: 'contrast(1.1) saturate(1.2)'
+                      filter: 'contrast(1.1) saturate(1.2)',
+                      imageRendering: 'auto',          // crisp-edges yerine auto
+                      WebkitImageRendering: 'auto'     // crisp-edges yerine auto
                     }}
                     onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
