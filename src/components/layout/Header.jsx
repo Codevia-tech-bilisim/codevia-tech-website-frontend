@@ -107,8 +107,8 @@ export default function Header() {
               transform: isMobile ? 'scale(2.8)' : 'scale(3.65)',
               transformOrigin: '50% 51%',
               filter: 'contrast(1.1) saturate(1.2)',
-              imageRendering: 'crisp-edges',
-              WebkitImageRendering: 'crisp-edges'
+              imageRendering: 'auto',          // crisp-edges yerine auto
+              WebkitImageRendering: 'auto'     // crisp-edges yerine auto
             }}
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
