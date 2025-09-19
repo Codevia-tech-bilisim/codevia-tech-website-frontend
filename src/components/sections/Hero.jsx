@@ -80,7 +80,7 @@ export default function Hero() {
             }}
           >
             {t('heroTitle')}
-            <br className="hidden sm:block" />
+            <br /> {/* ✅ "hidden sm:block" kaldırıldı - her zaman line break */}
             <span 
               className="text-white/90"
               style={{
@@ -90,7 +90,6 @@ export default function Hero() {
               {t('heroSubtitle')}
             </span>
           </h1>
-
           <p 
             className={`mx-auto mt-4 sm:mt-5 ${textSizes.maxWidth} ${textSizes.p} text-slate-300`}
             style={{ 
