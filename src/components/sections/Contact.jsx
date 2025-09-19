@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Section from "../common/Section";
-import { Send } from "lucide-react";
+import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
 import { useTranslation } from "../../contexts/TranslationContext";
@@ -9,6 +9,13 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    message: ''
+  });
+  
+  const [formStatus, setFormStatus] = useState({
+    isSubmitting: false,
+    isSuccess: false,
+    isError: false,
     message: ''
   });
   
@@ -21,10 +28,75 @@ export default function Contact() {
   
   const { t } = useTranslation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const mailtoLink = `mailto:hello@codevia.com.tr?subject=İletişim: ${formData.name}&body=${formData.message}%0D%0A%0D%0Aİletişim Bilgileri:%0D%0AE-posta: ${formData.email}`;
-    window.location.href = mailtoLink;
+    
+    setFormStatus({
+      isSubmitting: true,
+      isSuccess: false,
+      isError: false,
+      message: ''
+    });
+
+    try {
+      const response = await fetch('https://formspree.io/f/xdklqzjb', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Codevia İletişim: ${formData.name}`,
+        }),
+      });
+
+      if (response.ok) {
+        setFormStatus({
+          isSubmitting: false,
+          isSuccess: true,
+          isError: false,
+          message: t('formSuccessMessage') || 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.'
+        });
+        
+        // Form verilerini temizle
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+        
+        // 5 saniye sonra success mesajını gizle
+        setTimeout(() => {
+          setFormStatus(prev => ({
+            ...prev,
+            isSuccess: false,
+            message: ''
+          }));
+        }, 5000);
+        
+      } else {
+        throw new Error('Form gönderimi başarısız');
+      }
+    } catch (error) {
+      console.error('Form gönderimi hatası:', error);
+      setFormStatus({
+        isSubmitting: false,
+        isSuccess: false,
+        isError: true,
+        message: t('formErrorMessage') || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin veya direkt e-posta gönderin.'
+      });
+      
+      // 5 saniye sonra error mesajını gizle
+      setTimeout(() => {
+        setFormStatus(prev => ({
+          ...prev,
+          isError: false,
+          message: ''
+        }));
+      }, 5000);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -45,7 +117,31 @@ export default function Contact() {
       desc={t('contactDescription')}
     >
       <div className="max-w-2xl mx-auto">
-        {/* Contact Form - Tek sütun, merkezi */}
+        
+        {/* Success/Error Messages */}
+        {(formStatus.isSuccess || formStatus.isError) && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
+              formStatus.isSuccess 
+                ? 'bg-green-500/10 border border-green-500/20 text-green-400' 
+                : 'bg-red-500/10 border border-red-500/20 text-red-400'
+            }`}
+          >
+            {formStatus.isSuccess ? (
+              <CheckCircle className="h-5 w-5 flex-shrink-0" />
+            ) : (
+              <AlertCircle className="h-5 w-5 flex-shrink-0" />
+            )}
+            <p style={{ fontSize: isMobile ? '13px' : '14px' }}>
+              {formStatus.message}
+            </p>
+          </motion.div>
+        )}
+
+        {/* Contact Form */}
         <motion.div
           className="rounded-2xl border border-white/10 bg-white/[0.04] p-6"
           initial={{ opacity: 0, y: 20 }}
@@ -68,13 +164,14 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder={t('namePlaceholder')}
-                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300 disabled:opacity-50"
                 style={{ 
                   padding: `${spacing * 0.75}px ${spacing}px`,
                   height: `${inputHeight}px`,
                   fontSize: isMobile ? '14px' : '15px'
                 }}
                 required
+                disabled={formStatus.isSubmitting}
               />
             </div>
 
@@ -92,13 +189,14 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder={t('emailPlaceholder')}
-                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300 disabled:opacity-50"
                 style={{ 
                   padding: `${spacing * 0.75}px ${spacing}px`,
                   height: `${inputHeight}px`,
                   fontSize: isMobile ? '14px' : '15px'
                 }}
                 required
+                disabled={formStatus.isSubmitting}
               />
             </div>
 
@@ -116,24 +214,26 @@ export default function Contact() {
                 onChange={handleInputChange}
                 placeholder={t('messagePlaceholder')}
                 rows={6}
-                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300 resize-none"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] text-white placeholder-slate-400 focus:border-white/20 focus:bg-white/[0.08] transition-all duration-300 resize-none disabled:opacity-50"
                 style={{ 
                   padding: `${spacing * 0.75}px ${spacing}px`,
                   fontSize: isMobile ? '14px' : '15px'
                 }}
                 required
+                disabled={formStatus.isSubmitting}
               />
             </div>
 
             {/* Submit Button */}
             <motion.button
               type="submit"
-              className="w-full rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105"
+              disabled={formStatus.isSubmitting}
+              className="w-full rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 disabled:hover:scale-100 disabled:opacity-70"
               style={{ 
                 padding: `${spacing * 0.75}px ${spacing}px`,
                 height: `${getTouchOptimizedSize(48)}px`,
                 fontSize: isMobile ? '15px' : '16px',
-                color: 'rgba(32,32,32,0.9)',   // yazı rengi (ikinci örnekte text-slate-800 vardı)
+                color: 'rgba(32,32,32,0.9)',
                 background: `
                   radial-gradient(circle at 50% 40%, 
                     rgba(218,213,202,0.95) 0%, 
@@ -150,15 +250,23 @@ export default function Contact() {
                   0 0 20px rgba(218,213,202,0.15)
                 `
               }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: formStatus.isSubmitting ? 1 : 1.02 }}
+              whileTap={{ scale: formStatus.isSubmitting ? 1 : 0.98 }}
             >
-              <Send className="h-4 w-4" />
-              {t('sendButton')}
+              {formStatus.isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-600 border-t-transparent" />
+                  {t('sendingButton') || 'Gönderiliyor...'}
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4" />
+                  {t('sendButton')}
+                </>
+              )}
             </motion.button>
-
-
-            {/* Form Note */}
+            
+            
           </form>
         </motion.div>
       </div>

@@ -22,6 +22,20 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Contact butonuna basınca sayfanın en altına git
+  const handleContactScroll = (e) => {
+    e.preventDefault();
+    
+    // Sayfanın en altına smooth scroll
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
+    
+    // Mobil menüyü kapat
+    setOpen(false);
+  };
+
   const links = [
     { label: t("services"), href: "#services" },
     { label: t("projectsNav"), href: "#work" },
@@ -142,6 +156,7 @@ export default function Header() {
                     <a
                       key={index}
                       href={link.href}
+                      onClick={link.href === "#contact" ? handleContactScroll : undefined}
                       className="text-white/80 hover:text-white transition-colors duration-200 font-medium"
                     >
                       {link.label}
@@ -168,6 +183,7 @@ export default function Header() {
                     
                     <a
                       href="#contact"
+                      onClick={handleContactScroll}
                       className="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 font-medium text-slate-800 hover:scale-105"
                       style={{ 
                         height: `${buttonHeight + 4}px`,
@@ -257,7 +273,7 @@ export default function Header() {
                 <a
                   key={index}
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={link.href === "#contact" ? handleContactScroll : () => setOpen(false)}
                   className="flex items-center justify-between p-4 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200"
                   style={{ minHeight: '52px' }}
                 >
@@ -270,7 +286,7 @@ export default function Header() {
               <div className="pt-4 border-t border-white/10">
                 <a
                   href="#contact"
-                  onClick={() => setOpen(false)}
+                  onClick={handleContactScroll}
                   className="flex items-center justify-center gap-2 w-full py-4 rounded-xl font-semibold text-slate-800 transition-all duration-200"
                   style={{
                     background: `
