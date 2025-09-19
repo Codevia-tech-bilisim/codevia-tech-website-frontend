@@ -11,9 +11,9 @@ export const translations = {
     language: "Dil",
     
     // Hero Section
-    heroTitle: "Fikirler Sizden, Kod Bizden",
-    heroSubtitle: "Geleceği Birlikte Yazıyoruz",
-    heroDescription: "Codevia; kendi kendine servis edilebilen ekip araçları, analitik ve modern arayüzlerle yöneticilerinizi güçlendirir, çalışanlarınızı her yerden bağlı tutar.",
+    heroTitle: "Fikirlerinizden Güç Alıp",
+    heroSubtitle: "Gerçeğe Dönüştürüyoruz",
+    heroDescription: "Codevia; ekipler için basit, hızlı ve modern çözümler sunar. Analitik gücü ve kullanıcı dostu arayüzleriyle yöneticilerin işini kolaylaştırır, ekipleri her zaman bağlı tutar.",
     getStarted: "Başlayalım",
     
     // Services Section
@@ -207,9 +207,9 @@ export const translations = {
     language: "Language",
     
     // Hero Section
-    heroTitle: "Ideas from You, Code from Us",
-    heroSubtitle: "Writing the Future Together",
-    heroDescription: "Codevia empowers your managers with self-service team tools, analytics and modern interfaces, keeping your employees connected from anywhere.",
+    heroTitle: "Ideas from You",
+    heroSubtitle: "Code from Us",
+    heroDescription: "Codevia delivers simple, fast, and modern solutions for teams. With powerful analytics and user-friendly interfaces, it makes managers’ work easier and keeps teams connected anytime, anywhere.",
     getStarted: "Get Started",
     
     // Services Section
