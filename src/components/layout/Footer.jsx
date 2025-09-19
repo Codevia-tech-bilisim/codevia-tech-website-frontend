@@ -3,7 +3,6 @@ import Container from "../common/Container";
 import { Mail, Phone, MapPin, Github, Linkedin, Instagram } from "lucide-react";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
 import { useTranslation } from "../../contexts/TranslationContext";
-import logoSvg from "../../assets/codevia-logo.svg";
 
 export default function Footer() {
   const { 
@@ -124,15 +123,11 @@ export default function Footer() {
                   />
                   
                   <img
-                    src={logoSvg}
+                    src="/codevia-logo.png"
                     alt="Codevia"
-                    className="relative z-10 h-[76%] w-[76%] object-contain"
+                    className="relative z-10 w-[110%] h-[110%] sm:w-[100%] sm:h-[100%] object-contain"
                     style={{ 
-                      transform: 'scale(3.5)', 
-                      transformOrigin: '50% 51%',
-                      filter: 'contrast(1.1) saturate(1.2)',
-                      imageRendering: 'auto',          // crisp-edges yerine auto
-                      WebkitImageRendering: 'auto'     // crisp-edges yerine auto
+                      filter: 'contrast(1.1) saturate(1.2)'
                     }}
                     onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />

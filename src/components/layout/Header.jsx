@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ArrowRight, Menu, X, Globe } from "lucide-react";
 import { useSmartResponsive } from "../../hooks/useSmartResponsive";
 import { useTranslation } from "../../contexts/TranslationContext";
-// SVG logo import
-import logoSvg from "../../assets/codevia-logo.svg";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -55,7 +53,7 @@ export default function Header() {
 
   return (
     <>
-      {/* LOGO - ORİJİNAL TASARIM */}
+      {/* LOGO - PNG ile güncellendi */}
       <div
         className="fixed top-6 left-6 z-50 flex items-center justify-center"
         style={{ 
@@ -99,23 +97,20 @@ export default function Header() {
             }}
           />
           
+          {/* ✅ PNG logo - scaling kaldırıldı, container'a tam ortalandı */}
           <img
-            src={logoSvg}
+            src="/codevia-logo.png"
             alt="Codevia"
-            className="relative z-10 h-[76%] w-[76%] object-contain"
+            className="relative z-10 w-[110%] h-[110%] sm:w-[100%] sm:h-[100%] object-contain"
             style={{ 
-              transform: isMobile ? 'scale(2.8)' : 'scale(3.65)',
-              transformOrigin: '50% 51%',
-              filter: 'contrast(1.1) saturate(1.2)',
-              imageRendering: 'auto',          // crisp-edges yerine auto
-              WebkitImageRendering: 'auto'     // crisp-edges yerine auto
+              filter: 'contrast(1.1) saturate(1.2)'
             }}
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         </a>
       </div>
 
-      {/* HEADER BAR */}
+      {/* HEADER BAR - Değişiklik yok */}
       <header 
         className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
         style={{
@@ -231,7 +226,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Değişiklik yok */}
         {(isMobile || isTablet) && open && (
           <div 
             className="absolute mt-2 p-4 rounded-2xl bg-black/80 backdrop-blur-lg border border-white/10 shadow-2xl"
@@ -268,8 +263,7 @@ export default function Header() {
                 </div>
               </div>
             </div>
-
-            {/* Menu Items */}
+{/* Menu Items */}
             <nav className="py-6 flex flex-col gap-3 px-6">
               {links.map((link, index) => (
                 <a
@@ -283,7 +277,6 @@ export default function Header() {
                   <ArrowRight className="h-4 w-4" />
                 </a>
               ))}
-              
               {/* Teklif Al butonu */}
               <div className="pt-4 border-t border-white/10">
                 <a
@@ -292,10 +285,10 @@ export default function Header() {
                   className="flex items-center justify-center gap-2 w-full py-4 rounded-xl font-semibold text-slate-800 transition-all duration-200"
                   style={{
                     background: `
-                      radial-gradient(circle at 50% 40%, 
-                        rgba(218,213,202,0.95) 0%, 
-                        rgba(218,213,202,0.85) 40%, 
-                        rgba(218,213,202,0.75) 70%, 
+                      radial-gradient(circle at 50% 40%,
+                        rgba(218,213,202,0.95) 0%,
+                        rgba(218,213,202,0.85) 40%,
+                        rgba(218,213,202,0.75) 70%,
                         rgba(218,213,202,0.6) 100%
                       )
                     `,
