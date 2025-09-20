@@ -42,6 +42,11 @@ export default function Footer() {
     },
     {
       icon: <Phone className="h-4 w-4" />,
+      value: "+90 543 568 67 27",
+      href: "tel:+905435686727"
+    },
+    {
+      icon: <Phone className="h-4 w-4" />,
       value: "+90 543 870 75 75",
       href: "tel:+905438707575"
     },
