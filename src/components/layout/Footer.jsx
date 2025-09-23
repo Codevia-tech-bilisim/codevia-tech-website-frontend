@@ -37,8 +37,8 @@ export default function Footer() {
   const contactInfo = [
     {
       icon: <Mail className="h-4 w-4" />,
-      value: "info@codevia.com.tr",
-      href: "mailto:info@codevia.com.tr"
+      value: "info@codevia.tech",
+      href: "mailto:info@codevia.tech"
     },
     {
       icon: <Phone className="h-4 w-4" />,
